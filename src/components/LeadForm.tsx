@@ -2,12 +2,18 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const LeadForm = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  const validateIsraeliPhone = (phone: string): boolean => {
+    const cleanPhone = phone.replace(/\D/g, '');
+    return /^(05\d{8}|0[2-9]\d{7,8}|972[2-9]\d{7,9})$/.test(cleanPhone);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,18 +27,46 @@ const LeadForm = () => {
       return;
     }
 
+    if (!validateIsraeliPhone(phone)) {
+      toast({
+        title: "שגיאה",
+        description: "נא להזין מספר טלפון ישראלי תקין",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .insert([
+          { 
+            name: name.trim(), 
+            phone: phone.trim(),
+            status: 'new'
+          }
+        ]);
+
+      if (error) throw error;
+
       toast({
         title: "תודה רבה!",
         description: "הפרטים נשלחו בהצלחה. ניצור איתך קשר בקרוב!",
       });
       setName("");
       setPhone("");
+    } catch (error) {
+      console.error('Error submitting lead:', error);
+      toast({
+        title: "שגיאה",
+        description: "אירעה שגיאה בשליחת הפרטים. אנא נסה שנית.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (

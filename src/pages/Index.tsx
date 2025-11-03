@@ -19,6 +19,12 @@ const Index = () => {
           <p className="text-muted-foreground">
             © 2025 הכשרת שיווק דיגיטלי - כל הזכויות שמורות
           </p>
+          <a 
+            href="/admin/leads" 
+            className="text-xs text-muted-foreground/30 hover:text-muted-foreground/50 transition-colors mt-2 inline-block"
+          >
+            •
+          </a>
         </div>
       </footer>
     </div>
