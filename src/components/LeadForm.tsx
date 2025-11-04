@@ -4,6 +4,9 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
+// Configure Thank You page redirect
+const THANK_YOU_URL = "https://reelsacademy.com/thank-you";
+
 const LeadForm = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -53,10 +56,17 @@ const LeadForm = () => {
 
       toast({
         title: "תודה רבה!",
-        description: "הפרטים נשלחו בהצלחה. ניצור איתך קשר בקרוב!",
+        description: "הפרטים נשלחו בהצלחה. מעביר לדף תודה...",
       });
-      setName("");
-      setPhone("");
+      
+      // Redirect to thank you page with all URL parameters preserved
+      const currentParams = window.location.search;
+      const redirectUrl = THANK_YOU_URL + currentParams;
+      
+      // Small delay to show the toast message
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 1000);
     } catch (error) {
       console.error('Error submitting lead:', error);
       toast({
