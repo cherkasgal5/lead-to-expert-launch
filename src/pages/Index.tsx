@@ -19,12 +19,20 @@ const Index = () => {
           <p className="text-muted-foreground">
             © 2025 הכשרת שיווק דיגיטלי - כל הזכויות שמורות
           </p>
-          <a 
-            href="/admin/leads" 
-            className="text-xs text-muted-foreground/30 hover:text-muted-foreground/50 transition-colors mt-2 inline-block"
-          >
-            •
-          </a>
+          <div className="flex items-center justify-center gap-4 mt-3">
+            <a 
+              href="/accessibility" 
+              className="text-sm text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1"
+            >
+              הצהרת נגישות
+            </a>
+            <a 
+              href="/admin/leads" 
+              className="text-xs text-muted-foreground/30 hover:text-muted-foreground/50 transition-colors"
+            >
+              •
+            </a>
+          </div>
         </div>
       </footer>
     </div>
