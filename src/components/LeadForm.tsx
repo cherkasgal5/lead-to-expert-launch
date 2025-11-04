@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 // Configure Thank You page redirect
-const THANK_YOU_URL = "https://reelsacademy.com/thank-you";
+const THANK_YOU_URL = "/thank-you";
 
 const LeadForm = () => {
   const [name, setName] = useState("");
